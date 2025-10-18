@@ -2,20 +2,63 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\{AuthController, CategoryController, SubCategoryController
-,BannerController,SubMainCategoryController,ProductController,ProductImagesController,
-RolesController,PermissionsController,SharelinkController,FvtProductCOntroller,
-ProductOverviewSalesSectionController,ProductOverviewHomeSectionTagsController, ProductOverviewHomeSectionIconsController, 
-ProductOverviewHomeSectionCommentsController,ProductVideosController,TourInPersonController,TourOnVideoChatController,
-TalkToAgentController,HomeByCityController,ApartmentByCityController,RentByCityController,JobsController,EmailAlertsController,
-UserSearchController,SpecialOfferController,NewListController,
-StartAnOfferController,TiffenyAQuestionController,CareersController,ApplyForJobController,FvtJobController,CommunityController
-,ManageServiceController,ProjectInquiresController,ScheduleProjectController,
-ReviewManagementController,GetInTouchController,UserProfilingController,
-ProductFiltersController,RegisterQuestionsController,AnwserRegisterQuestionsController,RegisterQuestionsOptionsController,BlogsController,
-BlogImagesController,MainFaqsController,SuccessStoriesController,CoummunityEmailController,TopHeadlinesController,
-WhatsNewController,WhatsNewImagesController,ExecutiveLeaderController,UpComingEventsController,UpComingEventRegisterController,
-ChatController, OfferController
+use App\Http\Controllers\Api\{
+    AuthController,
+    CategoryController,
+    SubCategoryController,
+    BannerController,
+    SubMainCategoryController,
+    ProductController,
+    ProductImagesController,
+    RolesController,
+    PermissionsController,
+    SharelinkController,
+    FvtProductCOntroller,
+    ProductOverviewSalesSectionController,
+    ProductOverviewHomeSectionTagsController,
+    ProductOverviewHomeSectionIconsController,
+    ProductOverviewHomeSectionCommentsController,
+    ProductVideosController,
+    TourInPersonController,
+    TourOnVideoChatController,
+    TalkToAgentController,
+    HomeByCityController,
+    ApartmentByCityController,
+    RentByCityController,
+    JobsController,
+    EmailAlertsController,
+    UserSearchController,
+    SpecialOfferController,
+    NewListController,
+    StartAnOfferController,
+    TiffenyAQuestionController,
+    CareersController,
+    ApplyForJobController,
+    FvtJobController,
+    CommunityController,
+    ManageServiceController,
+    ProjectInquiresController,
+    ScheduleProjectController,
+    ReviewManagementController,
+    GetInTouchController,
+    UserProfilingController,
+    ProductFiltersController,
+    RegisterQuestionsController,
+    AnwserRegisterQuestionsController,
+    RegisterQuestionsOptionsController,
+    BlogsController,
+    BlogImagesController,
+    MainFaqsController,
+    SuccessStoriesController,
+    CoummunityEmailController,
+    TopHeadlinesController,
+    WhatsNewController,
+    WhatsNewImagesController,
+    ExecutiveLeaderController,
+    UpComingEventsController,
+    UpComingEventRegisterController,
+    ChatController,
+    OfferController
 };
 /*
 |--------------------------------------------------------------------------
@@ -35,25 +78,41 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Login & SignUp
+// // Login & SignUp
+// Route::post('/register', [AuthController::class, 'register']);
+// Route::post('/login', [AuthController::class, 'login']);
+// Route::get('/all-users', [AuthController::class, 'getusers']);
+// Route::get('/user-profile/{id}', [AuthController::class, 'getuserprofile']);
+// Route::post('/user-emailverify', [AuthController::class, 'checkuserlogin']);
+
+// Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail']);
+// Route::post('reset-password', [AuthController::class, 'reset']);
+
+// Route::put('change-password', [AuthController::class, 'changepassword']);
+// Route::put('profile-update/{id}', [AuthController::class, 'profileupdate']);
+
+// // Get User Agent Fliter
+// Route::get('/getuseragent/{agentname}', [AuthController::class, 'getuseragent']);
+
+// // Get All Agents
+// Route::get('/all-agents', [AuthController::class, 'getallagents']);
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/all-users', [AuthController::class, 'getusers']);
 Route::get('/user-profile/{id}', [AuthController::class, 'getuserprofile']);
 Route::post('/user-emailverify', [AuthController::class, 'checkuserlogin']);
 
-Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail']);
-Route::post('reset-password', [AuthController::class, 'reset']);
+// OTP based password reset flow
+Route::post('/forgot-password', [AuthController::class, 'sendOtp']);
+Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
+Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
-Route::put('change-password', [AuthController::class, 'changepassword']);
-Route::put('profile-update/{id}', [AuthController::class, 'profileupdate']);
+Route::put('/change-password', [AuthController::class, 'changepassword']);
+Route::put('/profile-update/{id}', [AuthController::class, 'profileupdate']);
 
-// Get User Agent Fliter
 Route::get('/getuseragent/{agentname}', [AuthController::class, 'getuseragent']);
-
-// Get All Agents
 Route::get('/all-agents', [AuthController::class, 'getallagents']);
-
 
 // Category
 Route::get('/get-category', [CategoryController::class, 'index']);
@@ -502,7 +561,7 @@ Route::get('/get-chat/{senderId}/{receiverId}', [ChatController::class, 'fetchMe
 // gets count of unreadable messages
 Route::get('/unread-messages/{senderId}/{receiverId}', [ChatController::class, 'unreadmesaages'])->name('unreadmesaages')->middleware('throttle:1000,1');
 // Mark as need api 
- 
+
 Route::post('/mark-messages-read', [ChatController::class, 'markasread'])->name('markasread')->middleware('throttle:1000,1');
 
 
@@ -511,9 +570,3 @@ Route::post('/offers', [OfferController::class, 'store']);
 Route::get('/offers/{id}', [OfferController::class, 'show']);
 Route::put('/offers/{id}', [OfferController::class, 'update']);
 Route::delete('/offers/{id}', [OfferController::class, 'destroy']);
-
-
-
-
-
-

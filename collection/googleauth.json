@@ -1,0 +1,55 @@
+{
+  "info": {
+    "name": "Google OAuth API",
+    "_postman_id": "google-oauth-collection",
+    "description": "Testing Google OAuth with Laravel API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "google_auth_code",
+      "value": "",
+      "type": "string",
+      "description": "Google OAuth callback code parameter after user authorizes"
+    }
+  ],
+  "item": [
+    {
+      "name": "Google OAuth Redirect",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/auth/google/redirect",
+          "host": ["{{base_url}}"],
+          "path": ["api","auth","google","redirect"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Google OAuth Callback",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/auth/google/call-back?code={{google_auth_code}}",
+          "host": ["{{base_url}}"],
+          "path": ["api","auth","google","call-back"],
+          "query": [
+            {
+              "key": "code",
+              "value": "{{google_auth_code}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

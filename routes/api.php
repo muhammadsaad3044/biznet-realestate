@@ -58,6 +58,7 @@ use App\Http\Controllers\Api\{
     UpComingEventsController,
     UpComingEventRegisterController,
     ChatController,
+    GoogleAuthController,
     OfferController
 };
 /*
@@ -78,25 +79,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// // Login & SignUp
-// Route::post('/register', [AuthController::class, 'register']);
-// Route::post('/login', [AuthController::class, 'login']);
-// Route::get('/all-users', [AuthController::class, 'getusers']);
-// Route::get('/user-profile/{id}', [AuthController::class, 'getuserprofile']);
-// Route::post('/user-emailverify', [AuthController::class, 'checkuserlogin']);
-
-// Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail']);
-// Route::post('reset-password', [AuthController::class, 'reset']);
-
-// Route::put('change-password', [AuthController::class, 'changepassword']);
-// Route::put('profile-update/{id}', [AuthController::class, 'profileupdate']);
-
-// // Get User Agent Fliter
-// Route::get('/getuseragent/{agentname}', [AuthController::class, 'getuseragent']);
-
-// // Get All Agents
-// Route::get('/all-agents', [AuthController::class, 'getallagents']);
-
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/all-users', [AuthController::class, 'getusers']);
@@ -113,6 +95,10 @@ Route::put('/profile-update/{id}', [AuthController::class, 'profileupdate']);
 
 Route::get('/getuseragent/{agentname}', [AuthController::class, 'getuseragent']);
 Route::get('/all-agents', [AuthController::class, 'getallagents']);
+
+// Google OAuth
+Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect']);
+Route::get('/auth/google/call-back', [GoogleAuthController::class, 'callbackGoogle']);
 
 // Category
 Route::get('/get-category', [CategoryController::class, 'index']);

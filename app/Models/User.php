@@ -28,6 +28,10 @@ class User extends Authenticatable
         'agent_id',
         'connect_with_facebook',
         'connect_with_google',
+        'google_id',
+        'google_token',
+        'google_refresh_token',
+        'google_token_expiry',
     ];
 
     /**
@@ -38,6 +42,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'google_token',
+        'google_refresh_token',
     ];
 
     /**

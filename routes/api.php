@@ -58,6 +58,7 @@ use App\Http\Controllers\Api\{
     UpComingEventsController,
     UpComingEventRegisterController,
     ChatController,
+    FacebookController,
     GoogleAuthController,
     OfferController
 };
@@ -99,6 +100,10 @@ Route::get('/all-agents', [AuthController::class, 'getallagents']);
 // Google OAuth
 Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect']);
 Route::get('/auth/google/call-back', [GoogleAuthController::class, 'callbackGoogle']);
+
+// Facebook OAuth
+Route::get('/auth/facebook/redirect', [FacebookController::class, 'redirectToFacebook']);
+Route::get('/auth/facebook/callback', [FacebookController::class, 'callbackFacebook']);
 
 // Category
 Route::get('/get-category', [CategoryController::class, 'index']);

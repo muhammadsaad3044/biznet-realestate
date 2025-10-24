@@ -26,6 +26,8 @@ class User extends Authenticatable
         'phone_number_type',
         'phone_number',
         'agent_id',
+        'facebook_id',
+        'facebook_token',
         'connect_with_facebook',
         'connect_with_google',
         'google_id',

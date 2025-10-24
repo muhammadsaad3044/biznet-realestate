@@ -25,6 +25,9 @@ return new class extends Migration
             $table->text('google_token')->nullable();
             $table->text('google_refresh_token')->nullable();
             $table->timestamp('google_token_expiry')->nullable();
+            // 🔑 Facebook OAuth fields
+            $table->string('facebook_id')->nullable();
+            $table->text('facebook_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

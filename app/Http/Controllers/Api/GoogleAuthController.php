@@ -36,7 +36,6 @@ class GoogleAuthController extends Controller
                     'email_verified_at'     => now(),                   // ✅ Verified
                     'connect_with_google'   => 1,                       // ✅ Google login flag
                     'password'              => bcrypt(Str::random(16)), // fallback
-                    'user_role'             => 'user',
 
                     'google_token'          => $googleUser->token,
                     'google_refresh_token'  => $googleUser->refreshToken,

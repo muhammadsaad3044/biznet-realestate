@@ -101,6 +101,9 @@ Route::get('/all-agents', [AuthController::class, 'getallagents']);
 Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect']);
 Route::get('/auth/google/call-back', [GoogleAuthController::class, 'callbackGoogle']);
 
+// update profile initial setup after social login
+Route::post('profile-setup', [AuthController::class, 'profileSetup']);
+
 // Facebook OAuth
 Route::get('/auth/facebook/redirect', [FacebookController::class, 'redirectToFacebook']);
 Route::get('/auth/facebook/callback', [FacebookController::class, 'callbackFacebook']);
@@ -125,7 +128,7 @@ Route::post('/store-banner', [BannerController::class, 'store']);
 Route::put('/update-banner/{id}', [BannerController::class, 'update']);
 Route::delete('/deletebanner/{id}', [BannerController::class, 'destory']);
 
-// Roles 
+// Roles
 Route::get('/get-roles', [RolesController::class, 'index']);
 Route::post('/store-role', [RolesController::class, 'store']);
 Route::put('/update-role/{id}', [RolesController::class, 'update']);
@@ -139,14 +142,14 @@ Route::delete('/deletepermissions/{id}', [PermissionsController::class, 'destory
 
 
 
-// Product 
+// Product
 Route::get('/get-products', [ProductController::class, 'index']);
 Route::get('/get-product/{id}', [ProductController::class, 'getproducts']);
 Route::post('/store-product', [ProductController::class, 'store']);
 Route::put('/update-product/{id}', [ProductController::class, 'update']);
 Route::delete('/deleteproduct/{id}', [ProductController::class, 'destory']);
 
-// Get Product Based on location 
+// Get Product Based on location
 Route::get('/getproduct/{lontitude}/{latitude}', [ProductController::class, 'getproductsbylocation']);
 Route::get('/getallproducts/{value}', [ProductController::class, 'getallproducts']);
 
@@ -167,7 +170,7 @@ Route::post('/store-productimage', [ProductImagesController::class, 'store']);
 Route::put('/update-productimage/{id}', [ProductImagesController::class, 'update']);
 Route::delete('/deleteproductimage/{id}', [ProductImagesController::class, 'destory']);
 
-// Store floor plan in imags table 
+// Store floor plan in imags table
 Route::post('/store-productfloorimage', [ProductImagesController::class, 'storefloorimage']);
 
 
@@ -191,27 +194,27 @@ Route::post('/store-productvideo', [ProductVideosController::class, 'store']);
 Route::put('/update-productvideo/{id}', [ProductVideosController::class, 'update']);
 Route::delete('/deleteproductvideos/{id}', [ProductVideosController::class, 'destory']);
 
-// OverView Sales Section  
+// OverView Sales Section
 Route::get('/get-productoverviewsales', [ProductOverviewSalesSectionController::class, 'index']);
 Route::post('/store-productoverviewsale', [ProductOverviewSalesSectionController::class, 'store']);
 Route::put('/update-productoverviewsale/{id}', [ProductOverviewSalesSectionController::class, 'update']);
 Route::delete('/deleteproductoverviewsale/{id}', [ProductOverviewSalesSectionController::class, 'destory']);
 
-// Overview Home  Section Tags 
+// Overview Home  Section Tags
 Route::get('/get-productoverviewhome', [ProductOverviewHomeSectionTagsController::class, 'index']);
 Route::post('/store-productoverviewhome', [ProductOverviewHomeSectionTagsController::class, 'store']);
 Route::put('/update-productoverviewhome/{id}', [ProductOverviewHomeSectionTagsController::class, 'update']);
 Route::delete('/deleteproductoverviewhome/{id}', [ProductOverviewHomeSectionTagsController::class, 'destory']);
 
 
-// Overview Home  Section icons 
+// Overview Home  Section icons
 Route::get('/get-productoverviewhomeicons', [ProductOverviewHomeSectionIconsController::class, 'index']);
 Route::post('/store-productoverviewhomeicon', [ProductOverviewHomeSectionIconsController::class, 'store']);
 Route::put('/update-productoverviewhomeicon/{id}', [ProductOverviewHomeSectionIconsController::class, 'update']);
 Route::delete('/deleteproductoverviewhomeicon/{id}', [ProductOverviewHomeSectionIconsController::class, 'destory']);
 
 
-// Overview Home  Section Comments  
+// Overview Home  Section Comments
 Route::get('/get-productoverviewhomecomments', [ProductOverviewHomeSectionCommentsController::class, 'index']);
 Route::post('/store-productoverviewhomecomment', [ProductOverviewHomeSectionCommentsController::class, 'store']);
 Route::put('/update-productoverviewhomecomment/{id}', [ProductOverviewHomeSectionCommentsController::class, 'update']);
@@ -222,7 +225,7 @@ Route::get('/get-productoverviewhomecomments/{user_id}', [ProductOverviewHomeSec
 
 
 
-// Tour In Person 
+// Tour In Person
 Route::get('/get-tourinpersons', [TourInPersonController::class, 'index']);
 Route::post('/store-tourinperson', [TourInPersonController::class, 'store']);
 Route::put('/update-tourinperson/{id}', [TourInPersonController::class, 'update']);
@@ -241,7 +244,7 @@ Route::delete('/deletetouronvideochat/{id}', [TourOnVideoChatController::class, 
 Route::get('/get-touronvideochat/{user_id}', [TourOnVideoChatController::class, 'user_index']);
 
 
-// Talk with agent 
+// Talk with agent
 Route::get('/get-talktoagent', [TalkToAgentController::class, 'index']);
 Route::post('/store-talktoagent', [TalkToAgentController::class, 'store']);
 Route::put('/update-talktoagent/{id}', [TalkToAgentController::class, 'update']);
@@ -292,7 +295,7 @@ Route::get('/get-email-alerts', [EmailAlertsController::class, 'index']);
 Route::post('/store-email-alerts', [EmailAlertsController::class, 'store']);
 
 
-// User Search 
+// User Search
 Route::get('/get-user-search', [UserSearchController::class, 'index']);
 Route::get('/get-user-search/{user_id}', [UserSearchController::class, 'user_index']);
 Route::post('/store-user-search', [UserSearchController::class, 'store']);
@@ -308,7 +311,7 @@ Route::delete('/deletespecialoffer/{id}', [SpecialOfferController::class, 'desto
 
 
 
-// New List   
+// New List
 Route::get('/get-new-list', [NewListController::class, 'index']);
 Route::post('/store-new-list', [NewListController::class, 'store']);
 Route::put('/update-new-list/{id}', [NewListController::class, 'update']);
@@ -316,7 +319,7 @@ Route::delete('/deletenewlist/{id}', [NewListController::class, 'destory']);
 // Search with user_id
 Route::get('/get-new-list/{user_id}', [NewListController::class, 'user_index']);
 
-// Start An Offer 
+// Start An Offer
 Route::get('/get-start-offer', [StartAnOfferController::class, 'index']);
 Route::post('/store-start-offer', [StartAnOfferController::class, 'store']);
 Route::put('/update-start-offer/{id}', [StartAnOfferController::class, 'update']);
@@ -370,7 +373,7 @@ Route::delete('/deleteapplyforjob/{id}', [ApplyForJobController::class, 'destory
 
 
 
-// fvt Jobs 
+// fvt Jobs
 
 Route::get('/get-fvt-job/{user_id}', [FvtJobController::class, 'user_index']);
 Route::get('/get-all-fvt-job', [FvtJobController::class, 'index']);
@@ -435,12 +438,12 @@ Route::get('/get-soldproperty', [ProductFiltersController::class, 'getsoldindex'
 Route::get('/get-saleproperty', [ProductFiltersController::class, 'getsalesindex']);
 
 
-// Global Serach 
+// Global Serach
 Route::get('/get-searchproduct/{search}', [ProductFiltersController::class, 'getsearchindex']);
 
 
 
-// Register Questions 
+// Register Questions
 Route::get('/get-questions/{user_type}', [RegisterQuestionsController::class, 'index']);
 Route::post('/store-questions', [RegisterQuestionsController::class, 'store']);
 Route::delete('/deletequestions/{id}', [RegisterQuestionsController::class, 'destory']);
@@ -551,7 +554,7 @@ Route::post('/storechat', [ChatController::class, 'storeMessages'])->name('store
 Route::get('/get-chat/{senderId}/{receiverId}', [ChatController::class, 'fetchMessages'])->name('getchat')->middleware('throttle:1000,1');
 // gets count of unreadable messages
 Route::get('/unread-messages/{senderId}/{receiverId}', [ChatController::class, 'unreadmesaages'])->name('unreadmesaages')->middleware('throttle:1000,1');
-// Mark as need api 
+// Mark as need api
 
 Route::post('/mark-messages-read', [ChatController::class, 'markasread'])->name('markasread')->middleware('throttle:1000,1');
 

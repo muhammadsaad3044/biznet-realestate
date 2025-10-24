@@ -407,4 +407,72 @@ class AuthController extends Controller
             'user' => $user,
         ]);
     }
+
+
+    // profile setup after social login
+    public function profileSetup(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'user_id' => 'required|exists:users,id',
+                'user_role' => 'required|string',
+                'answers' => 'required|array',
+                'answers.*.question_id' => 'required',
+                'answers.*.answer_id' => 'required',
+                'answers.*.isCustom' => 'boolean'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => 'error',
+                    'errors' => $validator->errors()
+                ], 422);
+            }
+
+            $user = User::find($request->user_id);
+
+            if (!$user) {
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'User not found'
+                ], 404);
+            }
+
+            // Update user role
+            $user->user_role = $request->user_role;
+            $user->save();
+
+            // Handle security questions and answers
+            if (is_array($request->answers)) {
+                $dataArray = [];
+
+                foreach ($request->answers as $answer) {
+                    $dataArray[] = [
+                        'user_id' => $user->id,
+                        'question_id' => $answer['question_id'] ?? '',
+                        'anwser' => $answer['answer_id'] ?? '',
+                        'is_custom' => $answer['isCustom'] ?? false,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+                }
+
+                AnwserRegisterQuestions::insert($dataArray);
+            }
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Profile setup completed successfully',
+                'user_role' => roles::find($user->user_role)->role_name ?? '',
+                'user' => $user
+            ]);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 500,
+                'message' => 'Something went wrong',
+                'error' => $th->getMessage()
+            ], 500);
+        }
+    }
 }

@@ -22,11 +22,11 @@ class GoogleAuthController extends Controller
     {
         try {
             $googleUser = Socialite::driver('google')->stateless()->user();
-
+    
             $user = User::where('google_id', $googleUser->getId())
                         ->orWhere('email', $googleUser->getEmail())
                         ->first();
-
+    
             if (!$user) {
                 $user = User::create([
                     'name'                  => $googleUser->getName(),
@@ -36,7 +36,7 @@ class GoogleAuthController extends Controller
                     'email_verified_at'     => now(),                   // ✅ Verified
                     'connect_with_google'   => 1,                       // ✅ Google login flag
                     'password'              => bcrypt(Str::random(16)), // fallback
-
+    
                     'google_token'          => $googleUser->token,
                     'google_refresh_token'  => $googleUser->refreshToken,
                     'google_token_expiry'   => now()->addSeconds($googleUser->expiresIn),
@@ -50,27 +50,27 @@ class GoogleAuthController extends Controller
                     'google_refresh_token'  => $googleUser->refreshToken ?: $user->google_refresh_token,
                     'google_token_expiry'   => now()->addSeconds($googleUser->expiresIn),
                 ]);
-
+    
                 if (!$user->email_verified_at) {
                     $user->email_verified_at = now();
                     $user->save();
                 }
             }
-
+    
             Auth::login($user);
-
+    
+            // Generate the API token
             $token = $user->createToken('authToken')->plainTextToken;
-
-            return response()->json([
-                'message' => $user->wasRecentlyCreated ? 'User created' : 'User logged in',
-                'token'   => $token,
-                'user'    => $user,
-            ]);
+    
+            // ✅ Encode token to safely pass in URL
+            $encodedToken = urlencode($token);
+    
+            // Redirect with the token and user details passed as URL parameters
+            return redirect("http://localhost:3000/?token={$encodedToken}&user_id={$user->id}&email={$user->email}&image={$user->image}");
+            
         } catch (\Throwable $e) {
-            return response()->json([
-                'message' => 'Authentication failed',
-                'error'   => $e->getMessage(),
-            ], 500);
+            return redirect("http://localhost:3000/?error=" . urlencode($e->getMessage()));
         }
     }
+
 }

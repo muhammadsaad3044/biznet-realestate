@@ -475,4 +475,29 @@ class AuthController extends Controller
             ], 500);
         }
     }
+    
+    public function me(Request $request)
+    {
+        $user = $request->user(); // This will get the authenticated user
+    
+        if (!$user) {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Unauthenticated'
+            ], 401);
+        }
+    
+        return response()->json([
+            'status' => 200,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'user_role' => $user->user_role,
+                'role_name' => $user->roles->role_name ?? '',
+                'permissions' => $user->roles->permissions ?? []
+            ],
+            'imagePath' => url('/uploads/users/'),
+        ]);
+    }
 }
